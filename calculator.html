@@ -1,92 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Java Calculator Code</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
+// Java program to create a simple calculator
+// with basic +, -, /, * using java swing elements
+
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
+class calculator extends JFrame implements ActionListener {
+    
+    static JFrame f;
+
+    static JTextField l;
+
+    String s0, s1, s2;
+
+    calculator()
+    {
+        s0 = s1 = s2 = "";
+    }
+
+    public static void main(String args[])
+    {
+        f = new JFrame("calculator");
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        pre {
-            background: #222;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 14px;
+        catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-    </style>
-</head>
-<body>
+        calculator c = new calculator();
 
-    <h1>Java Calculator Source Code</h1>
+        l = new JTextField(16);
+        l.setEditable(false);
 
-    <!-- Java Code Display Block -->
-    <pre><code>
-import java.util.Scanner;
+        JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bs, bd, bm, be, beq, beq1;
 
-public class Calculator {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        b0 = new JButton("0");
+        b1 = new JButton("1");
+        b2 = new JButton("2");
+        b3 = new JButton("3");
+        b4 = new JButton("4");
+        b5 = new JButton("5");
+        b6 = new JButton("6");
+        b7 = new JButton("7");
+        b8 = new JButton("8");
+        b9 = new JButton("9");
 
-        System.out.println("=== Java Calculator ===");
-        System.out.println("1. Addition (+)");
-        System.out.println("2. Subtraction (-)");
-        System.out.println("3. Multiplication (*)");
-        System.out.println("4. Division (/)");
-        System.out.print("Option chuno (1-4): ");
+        beq1 = new JButton("=");
+
+        ba = new JButton("+");
+        bs = new JButton("-");
+        bd = new JButton("/");
+        bm = new JButton("*");
+        beq = new JButton("C");
+
+        be = new JButton(".");
+
+        JPanel p = new JPanel();
+
+        bm.addActionListener(c);
+        bd.addActionListener(c);
+        bs.addActionListener(c);
+        ba.addActionListener(c);
+        b9.addActionListener(c);
+        b8.addActionListener(c);
+        b7.addActionListener(c);
+        b6.addActionListener(c);
+        b5.addActionListener(c);
+        b4.addActionListener(c);
+        b3.addActionListener(c);
+        b2.addActionListener(c);
+        b1.addActionListener(c);
+        b0.addActionListener(c);
+        be.addActionListener(c);
+        beq.addActionListener(c);
+        beq1.addActionListener(c);
+
+        p.add(l);
+        p.add(ba);
+        p.add(b1);
+        p.add(b2);
+        p.add(b3);
+        p.add(bs);
+        p.add(b4);
+        p.add(b5);
+        p.add(b6);
+        p.add(bm);
+        p.add(b7);
+        p.add(b8);
+        p.add(b9);
+        p.add(bd);
+        p.add(be);
+        p.add(b0);
+        p.add(beq);
+        p.add(beq1);
+
+        p.setBackground(Color.blue);
+
+        f.add(p);
+
+        f.setSize(200, 220);
+        f.show();
+    }
+    public void actionPerformed(ActionEvent e)
+    {
+        String s = e.getActionCommand();
+
+        if ((s.charAt(0) >= '0' && s.charAt(0) <= '9') || s.charAt(0) == '.') {
         
-        int choice = scanner.nextInt();
+            if (!s1.equals(""))
+                s2 = s2 + s;
+            else
+                s0 = s0 + s;
 
-        if (choice >= 1 && choice <= 4) {
-            System.out.print("Pehla number: ");
-            double num1 = scanner.nextDouble();
-
-            System.out.print("Doosra number: ");
-            double num2 = scanner.nextDouble();
-
-            double result = 0;
-            boolean valid = true;
-
-            switch (choice) {
-                case 1:
-                    result = num1 + num2;
-                    break;
-                case 2:
-                    result = num1 - num2;
-                    break;
-                case 3:
-                    result = num1 * num2;
-                    break;
-                case 4:
-                    if (num2 != 0) {
-                        result = num1 / num2;
-                    } else {
-                        System.out.println("Error: Zero (0) se divide nahi kar sakte!");
-                        valid = false;
-                    }
-                    break;
-            }
-
-            if (valid) {
-                System.out.println("Result: " + result);
-            }
-        } else {
-            System.out.println("Galat option chuna!");
+            l.setText(s0 + s1 + s2);
         }
+        else if (s.charAt(0) == 'C') {
+            s0 = s1 = s2 = "";
 
-        scanner.close();
+            l.setText(s0 + s1 + s2);
+        }
+        else if (s.charAt(0) == '=') {
+
+            double te;
+
+            if (s1.equals("+"))
+                te = (Double.parseDouble(s0) + Double.parseDouble(s2));
+            else if (s1.equals("-"))
+                te = (Double.parseDouble(s0) - Double.parseDouble(s2));
+            else if (s1.equals("/"))
+                te = (Double.parseDouble(s0) / Double.parseDouble(s2));
+            else
+                te = (Double.parseDouble(s0) * Double.parseDouble(s2));
+
+            l.setText(s0 + s1 + s2 + "=" + te);
+
+            s0 = Double.toString(te);
+
+            s1 = s2 = "";
+        }
+        else {
+            if (s1.equals("") || s2.equals(""))
+                s1 = s;
+
+            else {
+                double te;
+
+                if (s1.equals("+"))
+                    te = (Double.parseDouble(s0) + Double.parseDouble(s2));
+                else if (s1.equals("-"))
+                    te = (Double.parseDouble(s0) - Double.parseDouble(s2));
+                else if (s1.equals("/"))
+                    te = (Double.parseDouble(s0) / Double.parseDouble(s2));
+                else
+                    te = (Double.parseDouble(s0) * Double.parseDouble(s2));
+
+                s0 = Double.toString(te);
+
+                s1 = s;
+
+                s2 = "";
+            }
+            l.setText(s0 + s1 + s2);
+        }
     }
 }
-    </code></pre>
-
-    <br>
-    <a href="projects.html">
-        <button>Back to Projects</button>
-    </a>
-
-</body>
-</html>
